@@ -70,7 +70,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
