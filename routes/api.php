@@ -27,5 +27,6 @@ Route::prefix('v1')->group(function (\Illuminate\Routing\Router $router) {
     $router->get('users/list', [\App\Http\Controllers\UserController::class, 'list']);
     $router->resource('roles', \App\Http\Controllers\RoleController::class)->except('create')->parameter('roles', 'id');
     $router->resource('orders', \App\Http\Controllers\OrderController::class)->parameter('orders', 'id')->except('create');
+    $router->post('orders/link_products',[\App\Http\Controllers\OrderController::class,'linkProducts']);
 });
 
