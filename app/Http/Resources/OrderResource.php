@@ -40,6 +40,8 @@ class OrderResource extends JsonResource
                 'street1' => $this->street1,
                 'street2' => $this->street2,
             ],
+            'children' => OrderItemResource::collection($this->items),
+            'hasChildren' => sizeof($this->items) > 0 ? true : false,
         ];
     }
 }

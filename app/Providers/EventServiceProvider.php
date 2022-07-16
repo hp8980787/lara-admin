@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\OrderJudgeIsShippingEvent;
 use App\Events\OrderLinkEvent;
 use App\Listeners\OrderLinkListener;
+use App\Listeners\OrderUpdateIsShipping;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         OrderLinkEvent::class=>[
             OrderLinkListener::class
+        ],
+        OrderJudgeIsShippingEvent::class=>[
+            OrderUpdateIsShipping::class
         ]
     ];
 

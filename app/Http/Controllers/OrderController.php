@@ -13,7 +13,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->perPage ?? 10;
-        $query = Order::query();
+        $query = Order::query()->with('items');
         if ($search = $request->search) {
             $query->where('trans_id', 'like', "%$search%")
                 ->orWhere('order_number', 'like', "%$search%")
@@ -46,7 +46,9 @@ class OrderController extends Controller
     public function linkProducts(Request $request)
     {
         $orders = Order::query()->whereIn('id', $request->id)->get();
+
         OrderLinkEvent::dispatch($orders);
-        return $this->success($request->id);
+
+        return $this->success('关联成功');
     }
 }
