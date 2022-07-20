@@ -30,6 +30,7 @@ Route::prefix('v1')->group(function (\Illuminate\Routing\Router $router) {
         $router->resource('supplier', \App\Http\Controllers\SupplierController::class)->parameter('supplier', 'id');
         $router->resource('purchases', \App\Http\Controllers\PurchaseController::class)->parameter('purchases', 'id');
         $router->resource('warehouses', \App\Http\Controllers\StorehouseController::class)->except('edit', 'show')->parameter('warehouses', 'id');
+        $router->get('warehouses/list', [\App\Http\Controllers\StorehouseController::class,'list']);
         $router->resource('products', \App\Http\Controllers\ProductController::class)->except('edit', 'show')->parameter('products', 'id');
         $router->get('rate', [\App\Http\Controllers\RateController::class, 'rate']);
     });

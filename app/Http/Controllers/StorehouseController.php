@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StorehouseCollection;
 use App\Models\Storehouse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiBaseController as Controller;
@@ -13,11 +14,16 @@ class StorehouseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $query = Storehouse::query();
-        $data = $query->get();
-        return $this->success($data);
+        $query = Storehouse::query()->with('stocks');
+        if ($search = $request->search) {
+
+        }
+        $perPage = $request->perPage ?? 10;
+        $data = $query->paginate($perPage);
+
+        return $this->success(new StorehouseCollection($data));
     }
 
     /**
@@ -38,7 +44,11 @@ class StorehouseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Storehouse::query()->create([
+            'name' => $request->name
+        ]);
+
+        return $this->success('成功');
     }
 
     /**
@@ -72,7 +82,10 @@ class StorehouseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Storehouse::query()->where('id',$id)->update([
+            'name'=>$request->name
+        ]);
+        return $this->success('success');
     }
 
     /**
@@ -83,6 +96,14 @@ class StorehouseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Storehouse::query()->where('id',$id)->delete();
+        return  $this->success('成功');
+    }
+
+    public function list()
+    {
+        $query = Storehouse::query();
+        $data = $query->get();
+        return $this->success($data);
     }
 }

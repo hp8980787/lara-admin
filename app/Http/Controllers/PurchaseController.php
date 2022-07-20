@@ -51,4 +51,9 @@ class PurchaseController extends Controller
         }
         return $this->success('成功');
     }
+
+    public function index(PurchaseRequest $request)
+    {
+
+    }
 }
