@@ -16,6 +16,10 @@ class Purchase extends Model
         'user_id', 'supplier_id', 'remark', 'deadline_at', 'complete_at', 'title'
     ];
 
+    protected $casts = [
+        'created_at' => 'string:Y-m-d H:i:s',
+        'updated_at' => 'string:Y-m-d H:i:s',
+    ];
 
     const PURCHASE_PENDING_REVIEW = '待审核';
     const PURCHASE_COMPLETED_REVIEW = '审核通过,正在采购';
@@ -32,6 +36,9 @@ class Purchase extends Model
         return $this->hasMany(PurchaseItem::class);
     }
 
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }

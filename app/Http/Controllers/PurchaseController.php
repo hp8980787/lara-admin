@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PurchaseRequest;
+use App\Http\Resources\PurchaseCollection;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use Illuminate\Http\JsonResponse;
@@ -54,6 +55,13 @@ class PurchaseController extends Controller
 
     public function index(PurchaseRequest $request)
     {
-
+        $query = Purchase::query()->with('items');
+        if ($serach = $request->search) {
+            $query->where('title', 'like', "%$serach%")
+                ->orWhere('remark', 'like', "%$serach%");
+        }
+        $perPage = $request->perPage ?? 20;
+        $data = $query->paginate($perPage);
+        return $this->success(new PurchaseCollection($data));
     }
 }
