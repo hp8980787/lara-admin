@@ -21,8 +21,6 @@ class PurchaseController extends Controller
         $items = is_string($request->items) ? json_decode($request->items, true) : $request->items;
         $items = array_map(fn($v) => json_decode($v, true), $items);
         $now = Carbon::now('Asia/Shanghai');
-
-
         try {
             DB::beginTransaction();
             $purchase = Purchase::query()->create([
