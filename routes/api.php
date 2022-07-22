@@ -32,6 +32,9 @@ Route::prefix('v1')->group(function (\Illuminate\Routing\Router $router) {
         $router->resource('warehouses', \App\Http\Controllers\StorehouseController::class)->except('edit', 'show')->parameter('warehouses', 'id');
         $router->get('warehouses/list', [\App\Http\Controllers\StorehouseController::class,'list']);
         $router->resource('products', \App\Http\Controllers\ProductController::class)->except('edit', 'show')->parameter('products', 'id');
+
+        $router->resource('departments', \App\Http\Controllers\DepartmentController::class)->except('edit', 'show')->parameter('departments', 'id');
+        $router->get('departments/list',[\App\Http\Controllers\DepartmentController::class,'list']);
         $router->get('rate', [\App\Http\Controllers\RateController::class, 'rate']);
     });
 
