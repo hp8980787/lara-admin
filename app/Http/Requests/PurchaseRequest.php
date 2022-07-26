@@ -23,14 +23,16 @@ class PurchaseRequest extends FormRequest
      */
     public function rules()
     {
-        switch ($this->method()){
+        switch ($this->method()) {
             case 'POST':
                 return [
-                    'supplier_id'=>'required',
-                    'title'=>'required',
-                    'remark'=>'max:200',
-                    'deadline'=>'required'
+                    'supplier_id' => 'required',
+                    'title' => 'required',
+                    'remark' => 'max:200',
+                    'deadline' => 'required'
                 ];
+            case  'put':
+                return [];
         }
         return [
             //

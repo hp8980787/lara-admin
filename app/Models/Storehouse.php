@@ -17,7 +17,15 @@ class Storehouse extends Model
 
     public function stocks()
     {
-       return $this->belongsToMany(Product::class,'product_storehouse','storehouse_id','product_id')
-           ->withTimestamps()->withPivot('stock');
+        return $this->belongsToMany(Product::class, 'product_storehouse', 'storehouse_id', 'product_id')
+            ->withTimestamps()->withPivot('stock');
+    }
+
+    public function record(int $type,object $info) :bool
+    {
+        switch ($type){
+            case 1:
+
+        }
     }
 }

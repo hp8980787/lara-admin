@@ -12,7 +12,7 @@ class Order extends Model
     protected $fillable = [
         'trans_id', 'order_number', 'total', 'total_usd', 'currency', 'name', 'phone', 'email', 'postal',
         'country', 'state', 'city', 'street1', 'street2', 'ip', 'description', 'product_code', 'status',
-        'link_status','is_shipping','url'
+        'link_status','is_shipping','url','shipping_no','shipping_price','shipping_company'
     ];
 
     const ORDER_STATUS_PENDING = 'pending';   //待办

@@ -32,6 +32,30 @@ class Product extends Model
 
     public function warehouse()
     {
-        return $this->belongsToMany(Storehouse::class,'product_storehouse','product_id','storehouse_id')->withPivot('stock')->withTimestamps();
+        return $this->belongsToMany(Storehouse::class, 'product_storehouse', 'product_id', 'storehouse_id')->withPivot('stock')->withTimestamps();
+    }
+
+    public function warehouseFind($warehouseId)
+    {
+        return $this->belongsToMany(Storehouse::class, 'product_storehouse', 'product_id', 'storehouse_id')
+            ->withPivot('stock')->withTimestamps()
+            ->wherePivot('storehouse_id', $warehouseId);
+
+
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        $query->where('sku', 'like', "%$search%")
+            ->orWhere('jianjie1', 'like', "%$search%")
+            ->orWhere('jianjie2', 'like', "%$search%")
+            ->orWhere('category', 'like', "%$search%")
+            ->orWhere('brand', 'like', "%$search%")
+            ->orWhere('description', 'like', "%$search%")
+            ->orWhere('replace', 'like', "%$search%")
+            ->orWhere('dl', 'like', "%$search%")
+            ->orWhere('dy', 'like', "%$search%")
+            ->orWhere('pcode', 'like', "%$search%")
+            ->orWhere('pcodes', 'like', "%$search%");
     }
 }

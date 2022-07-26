@@ -9,14 +9,18 @@ class ProductResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+
+
     public function toArray($request)
     {
         return [
             'id' => $this->id,
             'sku' => $this->sku,
+            'pcode' => $this->pcode,
+            'pcodes' => $this->pcodes,
             'jianjie1' => $this->jianjie1,
             'jianjie2' => $this->jianjie2,
             'category' => $this->category,
@@ -32,11 +36,21 @@ class ProductResource extends JsonResource
             'price_us' => $this->price_us,
             'price_uk' => $this->price_uk,
             'price_jp' => $this->price_jp,
-            'statue' => $this->status,
+            'status' => $this->status,
             'replace' => $this->replace,
             'description' => $this->description,
-            'stock' => $this->stock,
+            'stock' => $this->stocks($this->warehouse),
+            'warehouse' => $this->warehouse,
             'data' => $this->created_at
         ];
+    }
+
+    public function stocks($results): int
+    {
+        $stocks = 0;
+        foreach ($results as $result) {
+            $stocks += $result->pivot->stock;
+        }
+        return $stocks;
     }
 }

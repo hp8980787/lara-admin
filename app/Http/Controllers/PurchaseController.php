@@ -6,6 +6,8 @@ use App\Http\Requests\PurchaseRequest;
 use App\Http\Resources\PurchaseCollection;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
+use App\Models\Storehouse;
+use App\Models\StorehouseRecord;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -61,5 +63,35 @@ class PurchaseController extends Controller
         $perPage = $request->perPage ?? 20;
         $data = $query->paginate($perPage);
         return $this->success(new PurchaseCollection($data));
+    }
+
+    public function update(PurchaseRequest $request, $id)
+    {
+        $data = $request->only('title', 'remark');
+        Purchase::query()->where('id', $id)->update($data);
+
+        return $this->success('success');
+    }
+
+    public function approve(PurchaseRequest $request, $id)
+    {
+        $purchase = Purchase::query()->with('items')->findOrFail($id);
+        if ($request->status == 2) {
+            $purchase->complete_at = now('Asia/Shanghai');
+            foreach ($purchase->items as $item) {
+                $storehouse = $item->updateStorehouse();
+                StorehouseRecord::query()->create([
+                    'storehouse_id' => $item->storehouse_id,
+                    'product_id' => $item->product_id,
+                    'quantity' => $item->quantity,
+                    'status' => 'in',
+                    'reviewer' => auth()->user()->id,
+                ]);
+            }
+
+        }
+        $purchase->status = $request->status;
+        $purchase->save();
+        return $this->success('success');
     }
 }
