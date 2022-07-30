@@ -34,6 +34,7 @@ Route::prefix('v1')->group(function (\Illuminate\Routing\Router $router) {
         $router->put('purchases/{id}/approve', [\App\Http\Controllers\PurchaseController::class, 'approve']);
         $router->resource('warehouses', \App\Http\Controllers\StorehouseController::class)->except('edit', 'show')->parameter('warehouses', 'id');
         $router->get('warehouses/list', [\App\Http\Controllers\StorehouseController::class, 'list']);
+        $router->resource('warehouses/record',\App\Http\Controllers\WarehouseRecordController::class)->only('index','destroy')->parameter('record','id');
         $router->resource('products', \App\Http\Controllers\ProductController::class)->except('edit', 'show')->parameter('products', 'id');
         $router->resource('departments', \App\Http\Controllers\DepartmentController::class)->except('edit', 'show')->parameter('departments', 'id');
         $router->get('departments/list', [\App\Http\Controllers\DepartmentController::class, 'list']);
