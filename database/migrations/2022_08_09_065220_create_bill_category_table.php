@@ -12,8 +12,13 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-//            $table->unsignedInteger('department_id')->after('name');
+        Schema::create('bill_categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('icon')->nullable();
+            $table->text('description')->nullable();
+            $table->unsignedTinyInteger('status')->default(1);
+            $table->timestamps();
         });
     }
 
@@ -24,8 +29,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-//            $table->dropColumn('department_id');
-        });
+        Schema::dropIfExists('bill_categories');
     }
 };
