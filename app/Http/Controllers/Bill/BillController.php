@@ -31,4 +31,10 @@ class BillController extends Controller
         ]);
         return $this->success('成功');
     }
+
+    public function destroy($id)
+    {
+        Bill::query()->where('id', $id)->delete();
+        return $this->success('成功');
+    }
 }

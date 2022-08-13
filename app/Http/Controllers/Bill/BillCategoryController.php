@@ -5,9 +5,15 @@ namespace App\Http\Controllers\Bill;
 use App\Http\Controllers\ApiBaseController as Controller;
 use App\Models\BillCategory;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Bill\BillTarit;
 
 class BillCategoryController extends Controller
 {
+    use BillTarit;
+    public array $rules=[];
+    public array $message=[];
+
+
     public function index(Request $request)
     {
         $data = BillCategory::query()->get();

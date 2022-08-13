@@ -45,7 +45,8 @@ Route::prefix('v1')->group(function (\Illuminate\Routing\Router $router) {
             $router->resource('category', \App\Http\Controllers\Bill\BillCategoryController::class)->except('show', 'edit')->parameter('category', 'id');
             //账本
             $router->resource('/', \App\Http\Controllers\Bill\BillController::class)->except('show', 'edit')->parameter('', 'id');
-
+            //账本字段
+            $router->resource('columns',\App\Http\Controllers\Bill\ColumnController::class)->except('show','edit')->parameter('columns','id');
         });
     });
 
