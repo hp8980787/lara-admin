@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Bill;
 
 use App\Http\Controllers\ApiBaseController as Controller;
+use App\Http\Controllers\Bill\Service\BillService;
 use App\Models\BillCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Bill\BillTarit;
@@ -10,9 +11,18 @@ use App\Http\Controllers\Bill\BillTarit;
 class BillCategoryController extends Controller
 {
     use BillTarit;
-    public array $rules=[];
-    public array $message=[];
 
+    public array $rules = [];
+    public array $message = [];
+    public $model;
+    public $service;
+
+    public function __construct()
+    {
+        $this->model = new BillCategory();
+        $this->service = new BillService($this->model);
+
+    }
 
     public function index(Request $request)
     {
@@ -20,10 +30,5 @@ class BillCategoryController extends Controller
         return $this->success($data);
     }
 
-    public function store(Request $request)
-    {
-        $data = $request->only('description', 'name', 'status');
-        BillCategory::query()->create($data);
-        return $this->success('成功');
-    }
+
 }
