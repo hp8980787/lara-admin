@@ -12,4 +12,9 @@ class BillCategory extends Model
     protected $fillable = [
         'name', 'description', 'status', 'form'
     ];
+
+    public function columns()
+    {
+        return $this->belongsToMany(BillColumn::class,'category_to_columns','category_id','column_id')->withTimestamps();
+    }
 }

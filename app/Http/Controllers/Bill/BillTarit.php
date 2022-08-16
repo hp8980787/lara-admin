@@ -18,7 +18,6 @@ trait BillTarit
      */
     public function initValidate(Request $request, array $rules = [], array $message = [])
     {
-
         $validator = Validator::make($request->all(), $rules, $message);
 
         if ($validator->fails()) {

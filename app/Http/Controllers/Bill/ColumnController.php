@@ -44,8 +44,14 @@ class ColumnController extends Controller
 
     public function index(Request $request): JsonResponse
     {
+
         $query = BillColumn::query();
-        $data = $query->paginate();
+        if ($search = $request->search) {
+            $query->where('name', 'like', "%$search%")
+                ->orWhere('label', 'like', "%$search%");
+        }
+        $perPage = $request->perPage ?? 8;
+        $data = $query->paginate($perPage);
         return $this->success(new ColumnCollection($data));
     }
 

@@ -26,9 +26,16 @@ class BillCategoryController extends Controller
 
     public function index(Request $request)
     {
-        $data = BillCategory::query()->get();
+        $data = BillCategory::query()->with('columns')->get();
         return $this->success($data);
     }
 
+    public function assign(Request $request)
+    {
+        $category = BillCategory::query()->findOrFail($request->id);
+        $columns = $request->columns;
+        $category->columns()->sync($columns);
+        return $this->success('成功');
+    }
 
 }
