@@ -13,14 +13,29 @@ class BillItem extends Model
         'bill_id', 'category_id', 'amount', 'remark', 'writer', 'viewer', 'status', 'model', 'model_id', 'week', 'day', 'month', 'year'
     ];
     protected $casts = [
-        'created_at' => 'date:Y-m-d H:i:s',
-        'updated_at' => 'date:Y-m-d H:i:s',
+        'created_at' => 'string:Y-m-d H:i:s',
+        'updated_at' => 'string:Y-m-d H:i:s',
     ];
 
     public function values()
     {
-        return $this->belongsToMany(BillColumn::class,'bill_to_values','bill_id','column_id')
+        return $this->belongsToMany(BillColumn::class, 'bill_to_values', 'bill_id', 'column_id')
             ->withTimestamps()->withPivot('value');
+    }
+
+    public function writerUser()
+    {
+        return $this->belongsTo(User::class, 'writer', 'id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(BillCategory::class, 'category_id', 'id');
+    }
+
+    public function bill()
+    {
+        return $this->belongsTo(Bill::class,'bill_id','id');
     }
 
 }

@@ -43,14 +43,19 @@ Route::prefix('v1')->group(function (\Illuminate\Routing\Router $router) {
         Route::prefix('bill')->group(function (\Illuminate\Routing\Router $router) {
             //账单分类
             $router->resource('category', \App\Http\Controllers\Bill\BillCategoryController::class)->except('show', 'edit')->parameter('category', 'id');
-            $router->post('category/assign',[\App\Http\Controllers\Bill\BillCategoryController::class,'assign']);
+            $router->post('category/assign', [\App\Http\Controllers\Bill\BillCategoryController::class, 'assign']);
+            $router->get('category/list', [\App\Http\Controllers\Bill\BillCategoryController::class, 'list']);
             //账本
             $router->resource('/', \App\Http\Controllers\Bill\BillController::class)->except('show', 'edit')->parameter('', 'id');
             //账本详情
             $router->resource('items', \App\Http\Controllers\Bill\BillItemController::class)->except('show', 'edit')->parameter('items', 'id');
             //账本字段
-            $router->resource('columns',\App\Http\Controllers\Bill\ColumnController::class)->except('show','edit')->parameter('columns','id');
+            $router->resource('columns', \App\Http\Controllers\Bill\ColumnController::class)->except('show', 'edit')->parameter('columns', 'id');
 
+
+        });
+        //workflow 工作流
+        Route::prefix('workflow')->group(function (\Illuminate\Routing\Router $router) {
 
         });
     });

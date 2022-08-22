@@ -30,6 +30,12 @@ class BillCategoryController extends Controller
         return $this->success($data);
     }
 
+    public function list()
+    {
+        $data = BillCategory::query()->active()->with('columns')->get();
+        return $this->success($data);
+    }
+
     public function assign(Request $request)
     {
         $category = BillCategory::query()->findOrFail($request->id);

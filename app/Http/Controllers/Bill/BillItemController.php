@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Bill;
 
 use App\Http\Controllers\Bill\Service\BillService;
+use App\Http\Resources\Bill\BillItemCollection;
 use App\Models\BillCategory;
 use App\Models\BillItem;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiBaseController as Controller;
@@ -89,5 +91,27 @@ class BillItemController extends Controller
 
         }
         return $this->success('添加成功');
+    }
+
+    public function index(Request $request)
+    {
+
+        $perPage = $request->perPage ?? 20;
+
+        $qeury = BillItem::query()->with('values','writerUser','category','bill');
+
+        $qeury->when($request->has('category_id'), function ($builder) use ($request) {
+                if ($request->category_id!=0){
+                    $builder->where('category_id', $request->category_id);
+                }
+
+        })->when($request->has('time'), function ($builder) use ($request) {
+            $builder->whereBetween('created_at', array_map(fn($v) => Carbon::parse($v), $request->time));
+        })->when($request->has('status'), function ($builder) use ($request) {
+            $builder->where('status', $request->status);
+        });
+        $data = $qeury->paginate($perPage);
+
+        return $this->success(new BillItemCollection($data));
     }
 }
