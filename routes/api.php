@@ -56,7 +56,10 @@ Route::prefix('v1')->group(function (\Illuminate\Routing\Router $router) {
         });
         //workflow 工作流
         Route::prefix('workflow')->group(function (\Illuminate\Routing\Router $router) {
-
+            //工作流分类
+            $router->resource('categories',\App\Http\Controllers\Workflow\CategoryController::class)->except('show','edit')->parameter('categories','id');
+            //工作流
+            $router->resource('/',\App\Http\Controllers\Workflow\WorkflowController::class)->parameter('','id');
         });
     });
 

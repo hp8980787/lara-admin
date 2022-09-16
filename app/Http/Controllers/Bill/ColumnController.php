@@ -8,11 +8,11 @@ use App\Models\BillColumn;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiBaseController as Controller;
-use App\Http\Controllers\Bill\BillTarit;
+use App\Http\Controllers\Bill\BillTrait;
 
 class ColumnController extends Controller
 {
-    use BillTarit;
+    use BillTrait;
 
     public object $model;
     public object $service;

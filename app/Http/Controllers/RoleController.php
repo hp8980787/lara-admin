@@ -18,9 +18,17 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+        $perPage = $request->perPage ?? 15;
+        $query = Role::query();
+        if ($search = $request->search) {
+            $query->where('name', 'like', "%$search%");
+        }
+        $data = $request->isPage === true ? $query->paginate($perPage) : $query->get();
+
+        return $this->success($data);
     }
 
     /**

@@ -6,11 +6,11 @@ use App\Http\Controllers\ApiBaseController as Controller;
 use App\Http\Controllers\Bill\Service\BillService;
 use App\Models\BillCategory;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Bill\BillTarit;
+use App\Http\Controllers\Bill\BillTrait;
 
 class BillCategoryController extends Controller
 {
-    use BillTarit;
+    use BillTrait;
 
     public array $rules = [];
     public array $message = [];

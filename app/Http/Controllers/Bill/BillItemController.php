@@ -10,12 +10,12 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiBaseController as Controller;
-use App\Http\Controllers\Bill\BillTarit;
+use App\Http\Controllers\Bill\BillTrait;
 use Illuminate\Support\Facades\DB;
 
 class BillItemController extends Controller
 {
-    use BillTarit;
+    use BillTrait;
 
 
     public array $rules = [

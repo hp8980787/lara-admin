@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Bill;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Bill\Service\BillService;
 use Illuminate\Support\Facades\Validator;
 
-trait BillTarit
+trait BaseTrait
 {
-
     /**
      *
      * @note 表单验证
@@ -28,7 +26,6 @@ trait BillTarit
         $data = $request->only($this->model->getFillable());
         return $data;
     }
-
 
 
     public function store(Request $request): JsonResponse
@@ -57,5 +54,4 @@ trait BillTarit
         $this->service->destroy($id);
         return $this->success('删除成功');
     }
-
 }
